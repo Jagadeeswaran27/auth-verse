@@ -1,4 +1,5 @@
 export function App() {
+  console.log(import.meta.env.VITE_TEST_VAR);
   return (
     <div>
       <header className="font-bold text-customColor">
