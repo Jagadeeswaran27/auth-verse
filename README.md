@@ -1,90 +1,192 @@
-# AuthVerse
+# AuthVerse 🔐
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+<div align="center">
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is almost ready ✨.
+![Nx](https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png)
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/nx-api/js?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
+**A comprehensive authentication strategy visualization platform**
 
-## Finish your remote caching setup
+[![Nx](https://img.shields.io/badge/Nx-21.3.11-blue)](https://nx.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.8.2-blue)](https://www.typescriptlang.org/)
+[![React](https://img.shields.io/badge/React-19.0.0-blue)](https://reactjs.org/)
+[![Express](https://img.shields.io/badge/Express-4.21.2-green)](https://expressjs.com/)
 
-[Click here to finish setting up your workspace!](https://cloud.nx.app/connect/AxAsbUNkbR)
+</div>
 
+## 🚀 About AuthVerse
 
-## Generate a library
+AuthVerse is an **Nx monorepo** that provides a comprehensive platform for users to explore, understand, and visualize different authentication strategies. Whether you're a developer learning about authentication, a security professional evaluating different approaches, or a team deciding on authentication implementation, AuthVerse offers interactive demonstrations and educational content.
 
-```sh
-npx nx g @nx/js:lib packages/pkg1 --publishable --importPath=@my-org/pkg1
-```
+### ✨ Key Features
 
-## Run tasks
+- **Interactive Authentication Demonstrations** - See different auth strategies in action
+- **Visual Flow Diagrams** - Understand the authentication process step-by-step
+- **Code Examples** - Real implementation examples for each strategy
+- **Security Analysis** - Compare strengths and weaknesses of different approaches
+- **Educational Content** - Learn about authentication best practices
 
-To build the library use:
+## 🏗️ Project Structure
 
-```sh
-npx nx build pkg1
-```
-
-To run any task with Nx use:
-
-```sh
-npx nx <target> <project-name>
-```
-
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
-
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Versioning and releasing
-
-To version and release the library use
+This is an **Nx monorepo** with the following structure:
 
 ```
-npx nx release
+auth-verse/
+├── frontend/          # React-based UI for auth strategy visualization
+├── backend/           # Express.js API server
+├── backend-e2e/       # End-to-end tests for backend
+├── packages/          # Shared libraries and utilities
+└── nx.json           # Nx workspace configuration
 ```
 
-Pass `--dry-run` to see what would happen without actually releasing the library.
+### Applications
 
-[Learn more about Nx release &raquo;](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+- **Frontend** (`@auth-verse/frontend`) - React application with Tailwind CSS for the user interface
+- **Backend** (`@auth-verse/backend`) - Express.js API server providing authentication endpoints
 
-## Keep TypeScript project references up to date
+## 🛠️ Technology Stack
 
-Nx automatically updates TypeScript [project references](https://www.typescriptlang.org/docs/handbook/project-references.html) in `tsconfig.json` files to ensure they remain accurate based on your project dependencies (`import` or `require` statements). This sync is automatically done when running tasks such as `build` or `typecheck`, which require updated references to function correctly.
+- **Monorepo Management**: [Nx](https://nx.dev) - Build system with first-class support for monorepos
+- **Frontend**: React 19, TypeScript, Tailwind CSS, Vite
+- **Backend**: Express.js, TypeScript, Node.js
+- **Testing**: Vitest, Jest
+- **Code Quality**: ESLint, Prettier
 
-To manually trigger the process to sync the project graph dependencies information to the TypeScript project references, run the following command:
+## 🚀 Getting Started
 
-```sh
-npx nx sync
+### Prerequisites
+
+- Node.js (v18 or higher)
+- npm or yarn
+
+### Installation
+
+1. **Clone the repository**
+
+   ```bash
+   git clone <your-repo-url>
+   cd auth-verse
+   ```
+
+2. **Install dependencies**
+
+   ```bash
+   npm install
+   ```
+
+3. **Start the development servers**
+
+   **Frontend (React app):**
+
+   ```bash
+   npx nx serve frontend
+   ```
+
+   **Backend (Express API):**
+
+   ```bash
+   npx nx serve backend
+   ```
+
+   **Both simultaneously:**
+
+   ```bash
+   npx nx run-many --target=serve --projects=frontend,backend
+   ```
+
+## 📚 Available Authentication Strategies
+
+AuthVerse covers various authentication approaches including:
+
+- **OAuth** - Google
+- **JWT (JSON Web Tokens)** - Stateless authentication
+- **Session-based Authentication** - Traditional server-side sessions
+
+## 🏗️ Development Commands
+
+### Build Applications
+
+```bash
+# Build frontend
+npx nx build frontend
+
+# Build backend
+npx nx build backend
+
+# Build all
+npx nx run-many --target=build --all
 ```
 
-You can enforce that the TypeScript project references are always in the correct state when running in CI by adding a step to your CI job configuration that runs the following command:
+### Linting
 
-```sh
-npx nx sync:check
+```bash
+# Lint frontend
+npx nx lint frontend
+
+# Lint backend
+npx nx lint backend
+
+# Lint all
+npx nx run-many --target=lint --all
 ```
 
-[Learn more about nx sync](https://nx.dev/reference/nx-commands#sync)
+### Type Checking
 
+```bash
+npx nx run-many --target=typecheck --all
+```
 
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+## 📦 Adding New Features
 
-## Install Nx Console
+### Generate a new library
 
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
+```bash
+npx nx g @nx/js:lib packages/my-auth-strategy --publishable --importPath=@auth-verse/my-auth-strategy
+```
 
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+### Generate a new component
 
-## Useful links
+```bash
+npx nx g @nx/react:component my-component --project=frontend
+```
 
-Learn more:
+## 🔧 Nx Workspace Features
 
-- [Learn more about this workspace setup](https://nx.dev/nx-api/js?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+- **Intelligent Caching** - Nx caches build artifacts for faster rebuilds
+- **Affected Commands** - Only run tasks on affected projects
+- **Project Graph** - Visualize dependencies with `npx nx graph`
+- **Code Generation** - Scaffold new features with Nx generators
 
-And join the Nx community:
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🔗 Useful Links
+
+- [Nx Documentation](https://nx.dev)
+- [React Documentation](https://reactjs.org/docs)
+- [Express.js Documentation](https://expressjs.com/)
+- [Authentication Best Practices](https://owasp.org/www-project-authentication-cheat-sheet/)
+
+## 🆘 Support
+
+If you encounter any issues or have questions:
+
+1. Check the [Issues](https://github.com/your-username/auth-verse/issues) page
+2. Create a new issue with detailed information
+3. Join our community discussions
+
+---
+
+<div align="center">
+
+**Built with ❤️ By Jagadeeswaran**
+
+</div>
