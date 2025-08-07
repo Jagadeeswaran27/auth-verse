@@ -1,11 +1,14 @@
+import { Route, Routes } from 'react-router-dom';
+import HomePage from './pages/HomePage';
+import { ROUTES } from './config/routes';
+import ServerSessionPage from './pages/ServerSessionPage';
+
 export function App() {
-  console.log(import.meta.env.VITE_TEST_VAR);
   return (
-    <div>
-      <header className="font-bold text-customColor">
-        <h1 className="text-red-500">Auth Verse</h1>
-      </header>
-    </div>
+    <Routes>
+      <Route path={ROUTES.home} element={<HomePage />} />
+      <Route path={ROUTES.serverSession} element={<ServerSessionPage />} />
+    </Routes>
   );
 }
 
