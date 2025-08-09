@@ -3,7 +3,8 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import session from 'express-session';
 import passport from 'passport';
-import authRoutes from './routes/auth';
+import sessionAuthRoute from './routes/sessionAuth';
+import jwtAuthRoute from './routes/jwtAuth';
 import './config/passport';
 
 dotenv.config();
@@ -45,15 +46,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/auth', authRoutes);
-
-app.get('/api/session-info', (req, res) => {
-  console.log(req.session.user, req.sessionID);
-  res.json({
-    sessionID: req.sessionID,
-    user: req.user || req.session.user || null,
-    isAuthenticated: !!req.user || !!req.session.user,
-  });
-});
+app.use('/session-auth', sessionAuthRoute);
+app.use('/jwt-auth', jwtAuthRoute);
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

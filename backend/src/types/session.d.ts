@@ -3,6 +3,7 @@ import { User } from '../db/user';
 
 declare module 'express-session' {
   interface SessionData {
-    user: User;
+    user: Omit<User, 'password'>;
+    isGoogle: boolean;
   }
 }

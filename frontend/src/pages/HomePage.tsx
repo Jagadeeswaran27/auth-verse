@@ -8,6 +8,9 @@ const HomePage = () => {
         <li>
           <Link to={ROUTES.serverSession}>Go to Server Session</Link>
         </li>
+        <li>
+          <Link to={ROUTES.jwtAuth}>Go to JWT Auth</Link>
+        </li>
       </ul>
     </div>
   );

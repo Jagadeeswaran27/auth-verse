@@ -13,11 +13,27 @@ if (!CLIENT_ID || !CLIENT_SECRET || !SERVER_URL) {
 }
 
 passport.use(
+  'google-session',
   new GoogleStrategy(
     {
       clientID: CLIENT_ID,
       clientSecret: CLIENT_SECRET,
-      callbackURL: `${SERVER_URL}/auth/google/callback`,
+      callbackURL: `${SERVER_URL}/session-auth/google/callback`,
+      scope: ['profile', 'email'],
+    },
+    (accessToken, refreshToken, profile, done) => {
+      console.log('Google profile:', profile);
+      return done(null, profile);
+    }
+  )
+);
+passport.use(
+  'google-jwt',
+  new GoogleStrategy(
+    {
+      clientID: CLIENT_ID,
+      clientSecret: CLIENT_SECRET,
+      callbackURL: `${SERVER_URL}/jwt-auth/google/callback`,
       scope: ['profile', 'email'],
     },
     (accessToken, refreshToken, profile, done) => {

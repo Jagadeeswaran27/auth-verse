@@ -4,27 +4,47 @@ import passport from 'passport';
 import { User, users } from '../db/user';
 import { v4 as uuidv4 } from 'uuid';
 
+type GoogleUser = {
+  displayName: string;
+  id: string;
+  emails: {
+    value: string;
+    verified: boolean;
+  }[];
+};
+
 dotenv.config();
 
 const router = Router();
 
 router.get(
   '/google',
-  passport.authenticate('google', { scope: ['profile', 'email'] })
+  passport.authenticate('google-session', { scope: ['profile', 'email'] })
 );
 
 router.get(
   '/google/callback',
-  passport.authenticate('google', {
+  passport.authenticate('google-session', {
     failureRedirect: `${process.env.CLIENT_URL}/login/failed`,
-    successRedirect: `${process.env.CLIENT_URL}/`,
-  })
+  }),
+  (req, res) => {
+    if (req.user) {
+      const googleUser = req.user as GoogleUser;
+      req.session.isGoogle = true;
+      const user: Omit<User, 'password'> = {
+        email: googleUser.emails[0].value,
+        name: googleUser.displayName,
+        id: googleUser.id,
+      };
+      req.session.user = user;
+    }
+    res.redirect(`${process.env.CLIENT_URL}/server-session`);
+  }
 );
 
 router.post('/signup', (req, res) => {
   const { name, email, password } = req.body;
   console.log(name, email, password);
-  // validation -> emial, pass length
   const user: User = {
     id: uuidv4(),
     name,
@@ -33,7 +53,6 @@ router.post('/signup', (req, res) => {
   };
 
   users.push(user);
-  // save to db
   res.json({ success: true });
 });
 
@@ -46,14 +65,12 @@ router.post('/login', (req, res) => {
   if (user.password !== password) {
     return res.status(401).json({ error: 'Invalid credentials' });
   }
-  // all success
-
   req.session.user = user;
+  req.session.isGoogle = false;
   return res.json({ isAuthenticated: true, user, sessionId: req.sessionID });
 });
 
 router.get('/logout', (req, res, next) => {
-  console.log('logout');
   req.logout((err) => {
     if (err) {
       return next(err);
@@ -68,6 +85,22 @@ router.get('/logout', (req, res, next) => {
         redirectUrl: `${process.env.CLIENT_URL}/login`,
       });
     });
+  });
+});
+
+router.get('/get-session-info', (req, res) => {
+  console.log(req.session.user, req.sessionID);
+  const isGoogle = req.session.isGoogle;
+  let user: User | null = null;
+  if (isGoogle) {
+    user = req.session.user as User;
+  } else {
+    user = req.session.user as User;
+  }
+  res.json({
+    sessionID: req.sessionID,
+    user: user || null,
+    isAuthenticated: !!req.session.user,
   });
 });
 
