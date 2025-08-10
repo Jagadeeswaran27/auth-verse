@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { User } from '../types/user';
+import ReactFlowExample from '../components/ReactFlowExaple';
 
 const SERVER_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -72,6 +73,9 @@ const JwtAuthPage = () => {
       </div>
       <div>{user ? user.name : 'No User'}</div>
       <div>{user ? 'Authenticated' : 'Not Authenticated'}</div>
+      <div className="w-full h-1/2">
+        <ReactFlowExample />
+      </div>
     </div>
   );
 };
