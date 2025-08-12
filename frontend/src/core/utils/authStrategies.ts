@@ -1,4 +1,4 @@
-import { ROUTES } from '../config/routes';
+import { ROUTES } from '../../config/routes';
 
 interface AuthStrategy {
   id: string;
@@ -30,7 +30,7 @@ export const authStrategies: AuthStrategy[] = [
     id: 'server-session',
     title: 'Server Session Authentication',
     description:
-      'Traditional session-based authentication with server-side state management. Ideal for enterprise applications requiring strict security controls.',
+      'Traditional session-based authentication with server-side state management. Ideal for enterprise applications.',
     badge: {
       text: 'Enterprise Ready',
       colorClass: 'bg-green-100/10 text-green-400 border-green-400/20',
@@ -79,10 +79,10 @@ export const authStrategies: AuthStrategy[] = [
         feature: 'Local Storage',
         desc: 'Client-side token management',
       },
-      {
-        feature: 'API Friendly',
-        desc: 'Ideal for REST/GraphQL APIs',
-      },
+      // {
+      //   feature: 'API Friendly',
+      //   desc: 'Ideal for REST/GraphQL APIs',
+      // },
     ],
     route: ROUTES.jwtAuth,
     colors: {

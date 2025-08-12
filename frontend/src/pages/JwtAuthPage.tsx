@@ -1,19 +1,27 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { User } from '../types/user';
-import ReactFlowExample from '../components/ReactFlowExaple';
+import SignupForm from '../components/jwt/SignupForm';
+import LoginForm from '../components/jwt/LoginForm';
+import JwtHero from '../components/jwt/JwtHero';
+import UserStatusCard from '../components/jwt/UserStatusCard';
+import UserDetailsCard from '../components/jwt/UserDetailsCard';
+import FormCardHeader from '../components/jwt/FormCardHeader';
+import TimingSelector from '../components/jwt/TimingSelector';
 
 const SERVER_URL = import.meta.env.VITE_BACKEND_URL;
 
 const JwtAuthPage = () => {
   const [user, setUser] = useState<User | null>(null);
-  const googleLogin = () => {
-    window.open(`${SERVER_URL}/jwt-auth/google`, '_self');
-  };
+  const [isSignupMode, setIsSignupMode] = useState(false);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
     setUser(null);
+  };
+
+  const toggleMode = () => {
+    setIsSignupMode(!isSignupMode);
   };
 
   useEffect(() => {
@@ -31,51 +39,37 @@ const JwtAuthPage = () => {
     getCurrentUser();
   }, []);
 
-  const handleSignup = async () => {
-    try {
-      const { data } = await axios.post(`${SERVER_URL}/jwt-auth/signup`, {
-        email: 'abc@gmail.com',
-        name: 'User1',
-        password: '12345',
-      });
-      console.log(data);
-      if (data.success) {
-        alert('signup successful');
-        return;
-      }
-      alert('signup failed');
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const handleLogin = async () => {
-    try {
-      const { data } = await axios.post(`${SERVER_URL}/jwt-auth/login`, {
-        email: 'abc@gmail.com',
-        password: '12345',
-      });
-      console.log(data);
-      localStorage.setItem('token', data.token);
-      setUser(data.user);
-      alert('login successful');
-    } catch (error) {
-      console.error(error);
-    }
-  };
   return (
-    <div>
-      <div className="flex gap-2">
-        <button onClick={googleLogin}>Google</button>
-        <button onClick={handleLogout}>Logout</button>
-        <button onClick={handleLogin}>Login</button>
-        <button onClick={handleSignup}>Signup</button>
+    <div className="pt-32 px-4 sm:px-6 lg:px-8">
+      <JwtHero />
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto mb-12">
+        <UserStatusCard user={user} />
+
+        {!user ? (
+          <div className="flex flex-col">
+            {/* Timing Selector above the form */}
+            <TimingSelector />
+
+            <div className="backdrop-blur-sm bg-white/5 border border-white/10 rounded-2xl p-8 shadow-2xl h-full">
+              <FormCardHeader isSignupMode={isSignupMode} />
+
+              {isSignupMode ? (
+                <SignupForm
+                  setIsSignupMode={setIsSignupMode}
+                  toggleMode={toggleMode}
+                />
+              ) : (
+                <LoginForm setUser={setUser} toggleMode={toggleMode} />
+              )}
+            </div>
+          </div>
+        ) : (
+          <UserDetailsCard logout={handleLogout} user={user} />
+        )}
       </div>
-      <div>{user ? user.name : 'No User'}</div>
-      <div>{user ? 'Authenticated' : 'Not Authenticated'}</div>
-      <div className="w-full h-1/2">
-        <ReactFlowExample />
-      </div>
+
+      {/* ReactFlow Demo Section */}
     </div>
   );
 };

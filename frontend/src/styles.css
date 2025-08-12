@@ -1,4 +1,63 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.react-flow__node {
+  border-radius: 12px !important;
+}
+
+.react-flow__controls {
+  background: rgba(0, 0, 0, 0.8) !important;
+  border: 1px solid rgba(147, 51, 234, 0.3) !important;
+  border-radius: 8px !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+.react-flow__controls button {
+  background: rgba(147, 51, 234, 0.1) !important;
+  border: 1px solid rgba(147, 51, 234, 0.3) !important;
+  color: #ffffff !important;
+  border-radius: 4px !important;
+}
+
+.react-flow__controls button:hover {
+  background: rgba(147, 51, 234, 0.2) !important;
+  box-shadow: 0 0 10px rgba(147, 51, 234, 0.3) !important;
+}
+
+.react-flow__minimap {
+  background: rgba(0, 0, 0, 0.8) !important;
+  border: 1px solid rgba(147, 51, 234, 0.3) !important;
+  border-radius: 8px !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+.react-flow__attribution {
+  background: rgba(0, 0, 0, 0.8) !important;
+  color: rgba(255, 255, 255, 0.7) !important;
+  border-radius: 4px !important;
+  border: 1px solid rgba(147, 51, 234, 0.3) !important;
+}
+
+.animated-edge {
+  opacity: 0;
+  animation: fadeInEdge 1s ease-in-out forwards;
+}
+
+@keyframes fadeInEdge {
+  from {
+    opacity: 0;
+    stroke-dashoffset: 100;
+  }
+  to {
+    opacity: 1;
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Global smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
 /* You can add global styles to this file, and also import other style files */
